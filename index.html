@@ -243,28 +243,53 @@
       }
 
       /* Adjust timeline for smaller screens */
+      .timeline {
+        /* 新增：使用 Flexbox 居中 timeline-container */
+        display: flex; /* <-- 新增 */
+        justify-content: center; /* <-- 新增：水平居中 */
+        align-items: flex-start; /* <-- 新增：顶部对齐容器内的项目 */
+        padding: 20px 0; /* 保持垂直内边距 */
+      }
+
       .timeline::before {
-        left: 20px; /* 竖线移到左侧20px处 */
-        transform: translateX(0);
+        /* 移除固定 left，让其相对于 timeline-container 居中 */
+        left: 50%; /* <-- 修改：居中到其父容器的50%位置 */
+        transform: translateX(-50%); /* <-- 保持垂直线真正的水平居中 */
+        /* 保持 top: 0; bottom: 0; width: 4px; background-color: #ccc; z-index: 0; */
+      }
+
+      .timeline-container {
+        /* 移除 align-items: center; 因为 timeline 已经处理了居中 */
+        align-items: flex-start; /* <-- 修改：改为顶部对齐，以便元素从上方开始排列 */
+        width: 100%; /* <-- 新增：确保容器占据可用宽度 */
+        max-width: 300px; /* <-- 新增：设置一个最大宽度，防止太宽 */
+        /* position: relative; z-index: 1; 保持不变 */
       }
 
       .timeline-item {
-        /* width: calc(100% - 60px); */ /* <-- 修改：删除或注释掉这一行，让宽度自适应内容 */
-        margin-left: 60px; /* 推项目到竖线右侧，留出空间给线和点 */
+        /* width: calc(100% - 60px); */ /* 保持注释 */
+        /* margin-left: 60px; */ /* <-- 修改：移除这个，不再需要固定左边距 */
         text-align: left; /* 所有项目文字都左对齐 */
         left: auto; /* 重置大屏幕上的left定位 */
-        margin-right: auto; /* <-- 新增：确保内容向右推，配合inline-block自适应 */
-        right: auto; /* <-- 新增：重置right定位 */
+        right: auto; /* 重置right定位 */
+        /* 新增：让所有项目都从左侧边缘开始，并根据内容自适应宽度 */
+        margin-left: 0; /* <-- 新增 */
+        margin-right: 0; /* <-- 新增 */
       }
 
-      /* 在手机版中，不需要奇偶项的特殊左右对齐 */
+      /* 在手机版中，奇偶项的定位需要统一处理，都相对于中线 */
       .timeline-item:nth-child(odd),
       .timeline-item:nth-child(even) {
-        margin-left: 60px; /* 统一将所有项目推到竖线右侧 */
-        margin-right: auto; /* 统一让内容自适应并靠左 */
-        text-align: left; /* 所有项目文字都左对齐 */
-        left: auto; /* 重置大屏幕上的left定位 */
+        /* left: auto; */ /* 保持注释 */
+        /* margin-left: 60px; */ /* <-- 修改：移除，由新的定位控制 */
+        /* margin-right: auto; */ /* <-- 修改：移除 */
+        text-align: left; /* 统一左对齐 */
+
+        /* 新增：相对父容器居中，然后偏移到竖线右侧 */
+        width: calc(50% - 20px); /* <-- 新增：占据容器一半减去一些间距 */
+        margin-left: calc(50% + 10px); /* <-- 新增：推到中线右侧，10px是调整值 */
       }
+
 
       .timeline-item::after { /* 调整连接线在手机版中的位置 */
         left: -15px; /* 连接线从左侧连接 */
