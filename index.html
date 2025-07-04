@@ -244,42 +244,46 @@
 
       /* Adjust timeline for smaller screens */
       .timeline::before {
-        left: 20px; /* Move line to the left edge */
+        left: 20px; /* 竖线移到左侧20px处 */
         transform: translateX(0);
       }
 
       .timeline-item {
-        width: calc(100% - 60px); /* Full width minus space for line/dot */
-        margin-left: 60px; /* Push items to the right of the line */
-        text-align: left;
-        left: auto; /* Reset left property for mobile */
+        /* width: calc(100% - 60px); */ /* <-- 修改：删除或注释掉这一行，让宽度自适应内容 */
+        margin-left: 60px; /* 推项目到竖线右侧，留出空间给线和点 */
+        text-align: left; /* 所有项目文字都左对齐 */
+        left: auto; /* 重置大屏幕上的left定位 */
+        margin-right: auto; /* <-- 新增：确保内容向右推，配合inline-block自适应 */
+        right: auto; /* <-- 新增：重置right定位 */
       }
 
+      /* 在手机版中，不需要奇偶项的特殊左右对齐 */
       .timeline-item:nth-child(odd),
       .timeline-item:nth-child(even) {
-        left: auto; /* Reset specific left positioning */
-        margin-left: 60px; /* Align all items to the right of the line */
-        text-align: left; /* All text aligned left */
+        margin-left: 60px; /* 统一将所有项目推到竖线右侧 */
+        margin-right: auto; /* 统一让内容自适应并靠左 */
+        text-align: left; /* 所有项目文字都左对齐 */
+        left: auto; /* 重置大屏幕上的left定位 */
       }
 
-      .timeline-item::after { /* Adjust connector line for mobile */
-        left: -15px;
+      .timeline-item::after { /* 调整连接线在手机版中的位置 */
+        left: -15px; /* 连接线从左侧连接 */
         right: auto;
         border-radius: 4px 0 0 4px;
       }
 
-      .timeline-item::before { /* Adjust dot for mobile */
-        left: -27px;
+      .timeline-item::before { /* 调整圆点在手机版中的位置 */
+        left: -27px; /* 圆点在左侧 */
         right: auto;
       }
 
       .timeline-item:hover {
-        transform: translateY(0); /* Remove lift effect on mobile to simplify */
+        transform: translateY(0); /* 手机版移除悬停效果，简化操作 */
       }
 
       .legend-list {
-        flex-direction: column; /* Stack legend items vertically on small screens */
-        align-items: center; /* Center them when stacked */
+        flex-direction: column; /* 手机版图例垂直堆叠 */
+        align-items: center; /* 堆叠时居中 */
         gap: 10px;
       }
     }
