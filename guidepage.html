@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fact Hunter: Israel-Iran Conflict Timeline</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Basic Reset & Body Styling */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto Slab', serif;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh; /* Ensures full viewport height */
+      background-size: cover; /* Make sure the background image covers the entire element */
+      background-position: center; /* Center the background image */
+      background-repeat: no-repeat; /* Do not repeat the background image */
+      background-attachment: fixed; /* Fix the background image during scroll */
+      /* Replace 'your-background-image.jpg' with the actual path to your image */
+      background-image: url('images/bg.jpg'); /* !!! IMPORTANT: CHANGE THIS PATH !!! */
+    }
+
+    /* Overlay for better text readability on background image */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0); /* White overlay with 50% opacity */
+      z-index: -1; /* Ensure it's behind the content */
+    }
+
+    /* Main Container for all content */
+    .main-content-wrapper {
+      width: 90%; /* Responsive width */
+      max-width: 1200px; /* Max width for large screens */
+      margin: 20px auto; /* Center the container with some vertical margin */
+      padding: 20px;
+      box-sizing: border-box; /* Include padding in the element's total width and height */
+      text-align: center; /* Horizontally center all text within this div */
+      background-color: rgba(255, 255, 255, 0.1); /* Slightly opaque white background for content */
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Header Styling */
+    .page-header h1, .page-header h2 {
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .page-header h1 {
+      font-size: 2.5em;
+    }
+
+    .page-header h2 {
+      font-size: 1.8em;
+    }
+
+    .page-header p.instruction {
+      font-size: 1.1em;
+      color: #eaeaea;
+      margin-top: 20px;
+    }
+
+    .highlight {
+      color: #FFD437; /* Reddish highlight */
+    }
+
+    .highlight-secondary {
+      color: #FFD437; /* Bluish highlight */
+    }
+
+    /* Timeline Section - Alternating Layout */
+    .timeline {
+      margin: 40px 0;
+      position: relative; /* For the vertical line */
+      padding: 20px 0; /* Space for items to extend */
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 4px; /* Thickness of the timeline line */
+      background-color: #ccc;
+      transform: translateX(-50%); /* Center the line */
+      z-index: 0; /* Ensure line is behind items */
+    }
+
+    .timeline-container {
+      display: flex;
+      flex-direction: column; /* Stack items vertically */
+      align-items: center; /* Center items on the line */
+      position: relative;
+      z-index: 1; /* Ensure items are above the line */
+    }
+
+    .timeline-item {
+      display: block;
+      width: 45%; /* Take up 45% width on either side of the center line */
+      padding: 15px 10px;
+      background-color: #8b8b8b; /* Blue background */
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      font-weight: 600;
+      font-size: 1.1em;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px; /* Space between items */
+      position: relative; /* For the dot and connector */
+    }
+
+    /* Alternating positioning for timeline items */
+    .timeline-item:nth-child(odd) {
+      left: -27.5%; /* Move odd items to the left of the center line */
+      text-align: right;
+    }
+
+    .timeline-item:nth-child(even) {
+      left: 27.5%; /* Move even items to the right of the center line */
+      text-align: left;
+    }
+
+    /* Connector dots and lines for the timeline */
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 15px; /* Length of the horizontal connector line */
+      height: 4px;
+      background-color: #8b8b8b;
+      transform: translateY(-50%);
+    }
+
+    .timeline-item:nth-child(odd)::after {
+      right: -15px; /* Connector on the right for odd items */
+      border-radius: 0 4px 4px 0;
+    }
+
+    .timeline-item:nth-child(even)::after {
+      left: -15px; /* Connector on the left for even items */
+      border-radius: 4px 0 0 4px;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 16px; /* Size of the dot */
+      height: 16px;
+      background-color: #fff;
+      border: 3px solid #8b8b8b;
+      border-radius: 50%;
+      transform: translateY(-50%);
+      z-index: 2; /* Bring dot to front */
+    }
+
+    .timeline-item:nth-child(odd)::before {
+      right: -27px; /* Position dot for odd items */
+    }
+
+    .timeline-item:nth-child(even)::before {
+      left: -27px; /* Position dot for even items */
+    }
+
+    .timeline-item:hover {
+      background-color: #031b6b; /* Darker blue on hover */
+      transform: translateY(-3px); /* Slight lift effect */
+    }
+
+    /* Legend Section */
+    .legend {
+      margin-top: 40px;
+      padding: 20px;
+      background-color: #f8f8f8; /* Light gray background */
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .legend h3 {
+      color: #2c3e50;
+      margin-bottom: 20px;
+      font-size: 1.5em;
+    }
+
+    .legend-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap; /* Allow items to wrap to the next line */
+      justify-content: center; /* Center list items */
+      gap: 15px 30px; /* Vertical and horizontal gap */
+    }
+
+    .legend-list li {
+      display: flex;
+      align-items: center;
+      font-size: 1em;
+      color: #444;
+    }
+
+    .dot {
+      height: 14px;
+      width: 14px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 8px;
+      border: 1px solid rgba(0, 0, 0, 0.05); /* Slight border for better definition */
+    }
+
+    /* Dot Colors */
+    .yellow { background-color: #FFFF01; }
+    .blue { background-color: #98C2FC; }
+    .red { background-color: #FB7F81; }
+    .green { background-color: #90E486; }
+    .darkgreen { background-color: #008001; }
+    .purple { background-color: #AD85E5; }
+    .orange { background-color: #FEA500; }
+    .lightyellow { background-color: #FFFF9F; } /* Slightly different yellow for statements */
+
+    /* Media Queries for Responsiveness */
+    @media (max-width: 768px) {
+      .page-header h1 {
+        font-size: 2em;
+      }
+
+      .page-header h2 {
+        font-size: 1.5em;
+      }
+
+      /* Adjust timeline for smaller screens */
+      .timeline::before {
+        left: 20px; /* Move line to the left edge */
+        transform: translateX(0);
+      }
+
+      .timeline-item {
+        width: calc(100% - 60px); /* Full width minus space for line/dot */
+        margin-left: 60px; /* Push items to the right of the line */
+        text-align: left;
+        left: auto; /* Reset left property for mobile */
+      }
+
+      .timeline-item:nth-child(odd),
+      .timeline-item:nth-child(even) {
+        left: auto; /* Reset specific left positioning */
+        margin-left: 60px; /* Align all items to the right of the line */
+        text-align: left; /* All text aligned left */
+      }
+
+      .timeline-item::after { /* Adjust connector line for mobile */
+        left: -15px;
+        right: auto;
+        border-radius: 4px 0 0 4px;
+      }
+
+      .timeline-item::before { /* Adjust dot for mobile */
+        left: -27px;
+        right: auto;
+      }
+
+      .timeline-item:hover {
+        transform: translateY(0); /* Remove lift effect on mobile to simplify */
+      }
+
+      .legend-list {
+        flex-direction: column; /* Stack legend items vertically on small screens */
+        align-items: center; /* Center them when stacked */
+        gap: 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-header h1 {
+        font-size: 1.8em;
+      }
+
+      .page-header h2 {
+        font-size: 1.3em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-content-wrapper">
+    <header class="page-header">
+      <h1>Fact Hunter: Network analysis of global leaders' statements on <span class="highlight">Israel-Iran conflict</span></h1>
+      <h2>Network Analysis of the 12-day <span class="highlight-secondary">Conflict</span></h2>
+      <p class="instruction">Click on the date to see the specific network analysis</p>
+    </header>
+
+    <section class="timeline">
+      <div class="timeline-container">
+        <a href="june13.html" class="timeline-item">June 13, 2025</a>
+        <a href="june14.html" class="timeline-item">June 14, 2025</a>
+        <a href="june15.html" class="timeline-item">June 15, 2025</a>
+        <a href="june16.html" class="timeline-item">June 16, 2025</a>
+        <a href="june17.html" class="timeline-item">June 17, 2025</a>
+        <a href="june18.html" class="timeline-item">June 18, 2025</a>
+        <a href="june19.html" class="timeline-item">June 19, 2025</a>
+        <a href="june20.html" class="timeline-item">June 20, 2025</a>
+        <a href="june21.html" class="timeline-item">June 21, 2025</a>
+        <a href="june22.html" class="timeline-item">June 22, 2025</a>
+        <a href="june23.html" class="timeline-item">June 23, 2025</a>
+        <a href="june24.html" class="timeline-item">June 24, 2025</a>
+      </div>
+    </section>
+
+    <section class="legend">
+      <h3>Legend of the network diagrams:</h3>
+      <ul class="legend-list">
+        <li><span class="dot yellow"></span> Persons</li>
+        <li><span class="dot blue"></span> Countries</li>
+        <li><span class="dot red"></span> Organizations & Entities</li>
+        <li><span class="dot green"></span> Titles</li>
+        <li><span class="dot darkgreen"></span> Regions</li>
+        <li><span class="dot purple"></span> Concepts or Projects</li>
+        <li><span class="dot orange"></span> Events</li>
+        <li><span class="dot lightyellow"></span> Statements</li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>
