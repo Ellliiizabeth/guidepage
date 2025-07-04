@@ -244,56 +244,28 @@
 
       /* Adjust timeline for smaller screens */
       .timeline {
-        display: flex; /* Make the timeline a flex container */
-        justify-content: center; /* Center its content (the timeline-container) horizontally */
-        align-items: flex-start; /* Align content to the top */
-        padding: 20px 0; /* Keep vertical padding */
+        display: flex; /* Makes the timeline a flex container */
+        justify-content: center; /* Centers its content (the timeline-container) horizontally */
+        align-items: flex-start; /* Aligns content to the top */
+        padding: 20px 0; /* Keeps vertical padding */
       }
 
       .timeline::before {
-        /* This vertical line will now be positioned relative to the timeline-container, not the timeline itself */
-        /* It needs to be inside the timeline-container for positioning.
-           Or, we can position it absolutely relative to .timeline, and then make .timeline-container account for its space.
-           Let's keep it relative to .timeline and adjust .timeline-container's left margin. */
-        left: 50%; /* Position the line in the center of the .timeline container */
-        transform: translateX(-50%); /* Truly center the line */
-        /* top: 0; bottom: 0; width: 4px; background-color: #ccc; z-index: 0; */
+        /* The main vertical line. It will be positioned at the start of the 'visual group'. */
+        left: 0; /* <-- MODIFIED: Place the line at the very left edge of its parent (.timeline) */
+        transform: translateX(0); /* No horizontal transform needed */
+        margin-left: 0; /* <-- MODIFIED: Ensure no extra left margin pushing it */
       }
 
-      .timeline-container {
-        /* timeline-container now needs to accommodate the centered line */
-        align-items: flex-start; /* Keep items aligned to the top within the container */
-        width: auto; /* Allow width to be determined by content + margins */
-        max-width: 300px; /* Set a max width for the entire centered group */
-        position: relative; /* Essential for positioning child elements relative to it */
-        /* To make items flush with the line, we'll shift the entire container.
-           The line is at 50% of .timeline. We want the items to start from this line.
-           Let's set a fixed left margin to pull it into view from the center. */
-        margin-left: -150px; /* <-- Crucial change: Pull the container left to align items with the line.
-                                      This value might need fine-tuning.
-                                      (e.g., -max-width/2 + desired offset from screen center)
-                                      Alternatively, adjust items themselves.
-                                      Let's use a simpler approach: make the line part of the items' offset.
-                                  */
-      }
-
-      /* Reset the overall timeline-container centering and manage within items */
       .timeline-container {
         flex-direction: column; /* Stack items vertically */
         align-items: flex-start; /* Keep items aligned to the start (left) of the container */
         position: relative;
-        z-index: 1; /* Ensure items are above the line */
-        /* No fixed width or auto margins here, let items control their width */
-        width: 100%; /* Take full width of parent (which is max-width 300px) */
+        z-index: 1; /* Ensures items are above the line */
+        width: 100%; /* Take full width of parent (which is centered by .timeline flex) */
+        max-width: 300px; /* Still crucial: Sets the max width for the entire centered timeline group */
+        /* background-color: rgba(255, 0, 0, 0.1); /* Temporary: Helps visualize the container boundary */
       }
-
-      /* Adjust the line to be relative to the timeline-container's start */
-      .timeline::before {
-        left: 0; /* Line at the very left of the timeline container */
-        transform: translateX(0); /* No horizontal transform needed */
-        margin-left: 20px; /* <-- Offset the line from the left edge of the centered group */
-      }
-
 
       .timeline-item {
         display: inline-block; /* Content hug */
@@ -311,19 +283,20 @@
         text-align: left; /* All text left-aligned */
 
         /* Positioning for mobile: Align left edge to the line */
-        margin-left: 40px; /* <-- Push item to the right of the line (20px line offset + 20px for dot/connector) */
+        /* Calculate precise margin-left to align with the vertical line */
+        margin-left: 20px; /* <-- MODIFIED: This is the exact offset from the timeline-container's left edge */
         margin-right: 0; /* Remove auto margin */
-        width: calc(100% - 40px); /* <-- Occupy remaining width */
+        width: calc(100% - 20px); /* <-- MODIFIED: Occupy remaining width after the margin-left */
       }
 
       /* On mobile, all items behave the same */
       .timeline-item:nth-child(odd),
       .timeline-item:nth-child(even) {
         /* Reset any desktop-specific odd/even styling */
-        margin-left: 40px; /* <-- All items are pushed right from the line */
+        margin-left: 20px; /* <-- MODIFIED: All items are pushed right from the line */
         margin-right: 0; /* All items hug content on the right */
         text-align: left; /* All text left-aligned */
-        width: calc(100% - 40px); /* Fill remaining width */
+        width: calc(100% - 20px); /* Fill remaining width */
       }
 
       .timeline-item::after { /* Connector line */
