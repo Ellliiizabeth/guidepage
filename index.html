@@ -231,7 +231,7 @@
     .purple { background-color: #AD85E5; }
     .orange { background-color: #FEA500; }
     .lightyellow { background-color: #FFFF9F; } /* Slightly different yellow for statements */
-
+    
     /* Media Queries for Responsiveness */
     @media (max-width: 768px) {
       .page-header h1 {
@@ -244,71 +244,106 @@
 
       /* Adjust timeline for smaller screens */
       .timeline {
-        /* 新增：使用 Flexbox 居中 timeline-container */
-        display: flex; /* <-- 新增 */
-        justify-content: center; /* <-- 新增：水平居中 */
-        align-items: flex-start; /* <-- 新增：顶部对齐容器内的项目 */
-        padding: 20px 0; /* 保持垂直内边距 */
+        display: flex; /* Make the timeline a flex container */
+        justify-content: center; /* Center its content (the timeline-container) horizontally */
+        align-items: flex-start; /* Align content to the top */
+        padding: 20px 0; /* Keep vertical padding */
       }
 
       .timeline::before {
-        /* 移除固定 left，让其相对于 timeline-container 居中 */
-        left: 50%; /* <-- 修改：居中到其父容器的50%位置 */
-        transform: translateX(-50%); /* <-- 保持垂直线真正的水平居中 */
-        /* 保持 top: 0; bottom: 0; width: 4px; background-color: #ccc; z-index: 0; */
+        /* This vertical line will now be positioned relative to the timeline-container, not the timeline itself */
+        /* It needs to be inside the timeline-container for positioning.
+           Or, we can position it absolutely relative to .timeline, and then make .timeline-container account for its space.
+           Let's keep it relative to .timeline and adjust .timeline-container's left margin. */
+        left: 50%; /* Position the line in the center of the .timeline container */
+        transform: translateX(-50%); /* Truly center the line */
+        /* top: 0; bottom: 0; width: 4px; background-color: #ccc; z-index: 0; */
       }
 
       .timeline-container {
-        /* 移除 align-items: center; 因为 timeline 已经处理了居中 */
-        align-items: flex-start; /* <-- 修改：改为顶部对齐，以便元素从上方开始排列 */
-        width: 100%; /* <-- 新增：确保容器占据可用宽度 */
-        max-width: 300px; /* <-- 新增：设置一个最大宽度，防止太宽 */
-        /* position: relative; z-index: 1; 保持不变 */
+        /* timeline-container now needs to accommodate the centered line */
+        align-items: flex-start; /* Keep items aligned to the top within the container */
+        width: auto; /* Allow width to be determined by content + margins */
+        max-width: 300px; /* Set a max width for the entire centered group */
+        position: relative; /* Essential for positioning child elements relative to it */
+        /* To make items flush with the line, we'll shift the entire container.
+           The line is at 50% of .timeline. We want the items to start from this line.
+           Let's set a fixed left margin to pull it into view from the center. */
+        margin-left: -150px; /* <-- Crucial change: Pull the container left to align items with the line.
+                                      This value might need fine-tuning.
+                                      (e.g., -max-width/2 + desired offset from screen center)
+                                      Alternatively, adjust items themselves.
+                                      Let's use a simpler approach: make the line part of the items' offset.
+                                  */
       }
+
+      /* Reset the overall timeline-container centering and manage within items */
+      .timeline-container {
+        flex-direction: column; /* Stack items vertically */
+        align-items: flex-start; /* Keep items aligned to the start (left) of the container */
+        position: relative;
+        z-index: 1; /* Ensure items are above the line */
+        /* No fixed width or auto margins here, let items control their width */
+        width: 100%; /* Take full width of parent (which is max-width 300px) */
+      }
+
+      /* Adjust the line to be relative to the timeline-container's start */
+      .timeline::before {
+        left: 0; /* Line at the very left of the timeline container */
+        transform: translateX(0); /* No horizontal transform needed */
+        margin-left: 20px; /* <-- Offset the line from the left edge of the centered group */
+      }
+
 
       .timeline-item {
-        /* width: calc(100% - 60px); */ /* 保持注释 */
-        /* margin-left: 60px; */ /* <-- 修改：移除这个，不再需要固定左边距 */
-        text-align: left; /* 所有项目文字都左对齐 */
-        left: auto; /* 重置大屏幕上的left定位 */
-        right: auto; /* 重置right定位 */
-        /* 新增：让所有项目都从左侧边缘开始，并根据内容自适应宽度 */
-        margin-left: 0; /* <-- 新增 */
-        margin-right: 0; /* <-- 新增 */
+        display: inline-block; /* Content hug */
+        padding: 15px 10px;
+        background-color: rgba(139, 139, 139, 0.7);
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        font-weight: 600;
+        font-size: 1.1em;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px; /* Space between items */
+        position: relative; /* For the dot and connector */
+        text-align: left; /* All text left-aligned */
+
+        /* Positioning for mobile: Align left edge to the line */
+        margin-left: 40px; /* <-- Push item to the right of the line (20px line offset + 20px for dot/connector) */
+        margin-right: 0; /* Remove auto margin */
+        width: calc(100% - 40px); /* <-- Occupy remaining width */
       }
 
-      /* 在手机版中，奇偶项的定位需要统一处理，都相对于中线 */
+      /* On mobile, all items behave the same */
       .timeline-item:nth-child(odd),
       .timeline-item:nth-child(even) {
-        /* left: auto; */ /* 保持注释 */
-        /* margin-left: 60px; */ /* <-- 修改：移除，由新的定位控制 */
-        /* margin-right: auto; */ /* <-- 修改：移除 */
-        text-align: left; /* 统一左对齐 */
-
-        /* 新增：相对父容器居中，然后偏移到竖线右侧 */
-        width: calc(50% - 20px); /* <-- 新增：占据容器一半减去一些间距 */
-        margin-left: calc(50% + 10px); /* <-- 新增：推到中线右侧，10px是调整值 */
+        /* Reset any desktop-specific odd/even styling */
+        margin-left: 40px; /* <-- All items are pushed right from the line */
+        margin-right: 0; /* All items hug content on the right */
+        text-align: left; /* All text left-aligned */
+        width: calc(100% - 40px); /* Fill remaining width */
       }
 
-
-      .timeline-item::after { /* 调整连接线在手机版中的位置 */
-        left: -15px; /* 连接线从左侧连接 */
+      .timeline-item::after { /* Connector line */
+        left: -15px; /* Connector starts from the item's left edge */
         right: auto;
         border-radius: 4px 0 0 4px;
       }
 
-      .timeline-item::before { /* 调整圆点在手机版中的位置 */
-        left: -27px; /* 圆点在左侧 */
+      .timeline-item::before { /* Dot */
+        left: -27px; /* Dot positions to the left of the item */
         right: auto;
       }
 
       .timeline-item:hover {
-        transform: translateY(0); /* 手机版移除悬停效果，简化操作 */
+        transform: translateY(0); /* Remove lift effect on mobile */
       }
 
       .legend-list {
-        flex-direction: column; /* 手机版图例垂直堆叠 */
-        align-items: center; /* 堆叠时居中 */
+        flex-direction: column;
+        align-items: center;
         gap: 10px;
       }
     }
