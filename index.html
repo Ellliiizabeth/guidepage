@@ -268,7 +268,17 @@
     .lightyellow { background-color: #FFFF9F; } /* Slightly different yellow for statements */
     
     @media (max-width: 768px) {
+      .logo-container {
+        top: 15px; /* Adjust as needed, smaller value moves it higher */
+        left: 15px; /* Adjust as needed, smaller value moves it further left */
+      }
+
+      .logo-container img {
+        max-width: 70px; /* <-- MODIFIED: Make logo even smaller on mobile */
+                          /* You can adjust this value (e.g., 50px, 70px) */
+      }
       /* Adjust timeline for smaller screens */
+      
       .timeline {
         /* Remove flex centering from here. The .timeline-container will be centered. */
         display: block; /* <-- MODIFIED: No longer a flex container for centering */
