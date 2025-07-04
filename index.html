@@ -91,6 +91,27 @@
       color: #FFD437; /* Bluish highlight */
     }
 
+    /* NEW: Slogan Styling */
+    .page-footer-slogan {
+      margin-top: 50px; /* Adjust spacing from the legend above */
+      font-family: 'Roboto Slab', serif; /* Keep consistent font */
+      font-size: 0.85em; /* Smaller font size, like a note */
+      color: white; /* White text color */
+      text-align: center; /* Ensure it's horizontally centered */
+      padding-bottom: 20px; /* Add some padding at the bottom */
+      text-shadow: 0 0 5px rgba(0,0,0,0.5); /* Optional: add a subtle shadow for readability on busy backgrounds */
+    }
+
+    .page-footer-slogan a {
+      color: white; /* Ensure the link text is also white */
+      text-decoration: none; /* Remove underline for cleaner look */
+      font-weight: 600; /* Make the email slightly bolder */
+    }
+
+    .page-footer-slogan a:hover {
+      text-decoration: underline; /* Add underline on hover for usability */
+    }
+
     /* Timeline Section - Alternating Layout */
     .timeline {
       margin: 40px 0;
@@ -265,6 +286,11 @@
         font-size: 1.5em;
       }
 
+      .page-footer-slogan {
+        font-size: 0.75em; /* Even smaller on mobile for compactness */
+        margin-top: 30px; /* Adjust spacing on mobile */
+      }
+      
       /* Adjust timeline for smaller screens */
       .timeline {
         display: flex; /* Makes the timeline a flex container */
@@ -396,6 +422,10 @@
         <li><span class="dot lightyellow"></span> Statements</li>
       </ul>
     </section>
+    
+    <footer class="page-footer-slogan"> Contact Us: <a href="mailto:therealfacthunter@outlook.com">therealfacthunter@outlook.com</a>
+    </footer>
+    
   </div>
 </body>
 </html>
