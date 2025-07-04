@@ -104,11 +104,11 @@
       z-index: 1; /* Ensure items are above the line */
     }
 
-    .timeline-item {
-      display: block;
-      width: 30%; /* Take up 45% width on either side of the center line */
-      padding: 15px 45px;
-      background-color: rgba(139, 139, 139, 0.8); /*background */
+     .timeline-item {
+      display: inline-block; /* <-- 修改：从 block 改为 inline-block */
+      /* width: 45%; */ /* <-- 修改：删除或注释掉这一行 */
+      padding: 15px 10px;
+      background-color: rgba(139, 139, 139, 0.7);
       color: white;
       text-decoration: none;
       border-radius: 5px;
@@ -122,15 +122,17 @@
 
     /* Alternating positioning for timeline items */
     .timeline-item:nth-child(odd) {
-      left: -20.5%; /* Move odd items to the left of the center line */
+      /* left: -27.5%; */ /* <-- 修改：删除或注释掉这一行 */
+      margin-right: auto; /* <-- 新增：确保内容向右推 */
       text-align: right;
     }
 
     .timeline-item:nth-child(even) {
-      left: 20.5%; /* Move even items to the right of the center line */
+      /* left: 27.5%; */ /* <-- 修改：删除或注释掉这一行 */
+      margin-left: auto; /* <-- 新增：确保内容向左推 */
       text-align: left;
     }
-
+    
     /* Connector dots and lines for the timeline */
     .timeline-item::after {
       content: '';
