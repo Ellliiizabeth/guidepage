@@ -6,6 +6,20 @@
   <title>Fact Hunter: Israel-Iran Conflict Timeline</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
+    /* NEW: Logo Container Styling */
+    .logo-container {
+      position: absolute; /* <-- Key for positioning without affecting flow */
+      top: 20px; /* Distance from the top edge */
+      left: 20px; /* Distance from the left edge */
+      z-index: 1000; /* Ensure it stays on top of other elements */
+    }
+
+    .logo-container img {
+      max-width: 120px; /* Adjust logo size as needed */
+      height: auto; /* Maintain aspect ratio */
+      display: block; /* Ensures proper sizing and avoids extra space below image */
+    }
+
     /* Basic Reset & Body Styling */
     body {
       margin: 0;
@@ -234,6 +248,15 @@
     
     /* Media Queries for Responsiveness */
     @media (max-width: 768px) {
+      .logo-container {
+        top: 10px; /* Adjust for smaller screens */
+        left: 10px; /* Adjust for smaller screens */
+      }
+
+      .logo-container img {
+        max-width: 80px; /* Make logo smaller on mobile */
+      }
+      
       .page-header h1 {
         font-size: 2em;
       }
@@ -333,6 +356,9 @@
   </style>
 </head>
 <body>
+  <div class="logo-container"> <a href="http://www.therealfacthunter.com/" target="_blank"> <img src="images/yellowlogo.png" alt="Fact Hunter Logo"> </a>
+  </div>
+  
   <div class="main-content-wrapper">
     <header class="page-header">
       <h1>Fact Hunter: Network analysis of global leaders' statements on <span class="highlight">Israel-Iran conflict</span></h1>
