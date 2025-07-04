@@ -301,9 +301,9 @@
 
       .timeline::before {
         /* This line should be the absolute left edge of our visual group */
-        left: 53px; /* <-- MODIFIED: Place the line at the very left edge of its parent (.timeline) */
+        left: 0; /* Place the line at the very left edge of its parent (.timeline) */
         transform: translateX(0); /* No horizontal transform needed */
-        margin-left: 0; /* <-- MODIFIED: Ensure no extra left margin pushing it */
+        margin-left: 0; /* Ensure no extra left margin pushing it */
       }
 
       .timeline-container {
@@ -312,13 +312,12 @@
         position: relative;
         z-index: 1; /* Ensures items are above the line */
         width: 100%; /* Take full width of parent (which is centered by .timeline flex) */
-        max-width: 300px; /* Still crucial: Sets the max width for the entire centered timeline group */
-        /* background-color: rgba(255, 0, 0, 0.1); /* Temporary: Helps visualize the container boundary */
+        max-width: 300px; /* Sets the max width for the entire centered timeline group */
       }
 
       .timeline-item {
         display: inline-block; /* Content hug */
-        padding: 15px 10px;
+        padding: 15px 10px 15px 0px; /* Left padding already 0 from previous step */
         background-color: rgba(139, 139, 139, 0.7);
         color: white;
         text-decoration: none;
@@ -331,38 +330,43 @@
         position: relative; /* For the dot and connector */
         text-align: left; /* All text left-aligned */
 
-        /* Positioning for mobile: Align left edge to the line */
-        /* This margin-left now needs to account for the dot's entire width + its negative position */
-        margin-left: 30px; /* <-- MODIFIED: Adjusted for precise alignment. (Dot's width (16px) + border (3px*2) + some buffer) */
-                                /* The dot (::before) is 16px wide + 3px border = 22px visual width.
-                                   It's positioned at -27px left.
-                                   So, the visual start of the dot is at item_left - 27px.
-                                   We want item_left - 27px = 0 (the line's position).
-                                   Thus, item_left = 27px. Let's use 30px for a tiny buffer. */
+        /* Positioning for mobile: Item's left edge aligns right of the dot */
+        /* The dot's total width is 16px (content) + 3px (left border) + 3px (right border) = 22px */
+        /* To make the dot's left edge at 0, and the item follow it,
+           the item needs a margin-left equal to the dot's full width. */
+        margin-left: 22px; /* <-- MODIFIED: Pushes the item box 22px right of the line */
         margin-right: 0; /* Remove auto margin */
-        width: calc(100% - 30px); /* <-- MODIFIED: Occupy remaining width after the adjusted margin-left */
+        width: calc(100% - 22px); /* <-- MODIFIED: Occupy remaining width after the adjusted margin-left */
       }
 
       /* On mobile, all items behave the same */
       .timeline-item:nth-child(odd),
       .timeline-item:nth-child(even) {
         /* Reset any desktop-specific odd/even styling */
-        margin-left: 30px; /* <-- MODIFIED: All items are pushed right from the line */
+        margin-left: 22px; /* <-- MODIFIED: All items are pushed right from the line */
         margin-right: 0; /* All items hug content on the right */
         text-align: left; /* All text left-aligned */
-        width: calc(100% - 30px); /* Fill remaining width */
+        width: calc(100% - 22px); /* Fill remaining width */
       }
 
       .timeline-item::after { /* Connector line */
-        /* This should connect to the line, which is at the very left (0px) of the timeline-container */
-        left: -15px; /* <-- MODIFIED: Adjust to visually meet the line */
+        /* Its right edge should touch the item's left edge. Its left edge touches the dot's left edge. */
+        left: -22px; /* <-- MODIFIED: This positions the connector's left end exactly at the line (0px) */
         right: auto;
         border-radius: 4px 0 0 4px;
       }
 
       .timeline-item::before { /* Dot */
-        /* This should also connect to the line */
-        left: -27px; /* <-- MODIFIED: Adjust to visually meet the line. This value is relative to the item's margin-box. */
+        /* We want the dot's LEFT edge to be at 0px (the line's position). */
+        /* The dot's total width is 22px. Its `left` property is its top-left corner.
+           So, to have its left corner at 0px, `left` should be `0px` relative to the item's margin box.
+           But the dot is a child of the item, so it's relative to the item's padding box.
+           Since item's padding-left is 0, item's padding box starts at its margin box.
+           So `left: 0;` will make the dot's left edge align with the item's left edge.
+           However, we want it at the vertical line, which is at the very beginning of the centered group.
+           Let's re-evaluate: the dot needs to extend `22px` to the left from its item's left edge.
+           So, `left: -22px;` makes the dot's left edge perfectly aligned with the line. */
+        left: -22px; /* <-- MODIFIED: This aligns the dot's leftmost edge precisely with the vertical line */
         right: auto;
       }
 
