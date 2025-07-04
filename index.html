@@ -122,14 +122,16 @@
 
     /* Alternating positioning for timeline items */
     .timeline-item:nth-child(odd) {
-      /* left: -27.5%; */ /* <-- 修改：删除或注释掉这一行 */
-      margin-right: auto; /* <-- 新增：确保内容向右推 */
+      /* margin-right: auto; */ /* <-- 修改：删除或注释掉这一行 */
+      margin-left: auto; /* <-- 新增：将该项目推向左侧 */
+      margin-right: calc(50% + 20px); /* <-- 新增：向左拉近中线，20px是示意值 */
       text-align: right;
     }
 
     .timeline-item:nth-child(even) {
-      /* left: 27.5%; */ /* <-- 修改：删除或注释掉这一行 */
-      margin-left: auto; /* <-- 新增：确保内容向左推 */
+      /* margin-left: auto; */ /* <-- 修改：删除或注释掉这一行 */
+      margin-right: auto; /* <-- 新增：将该项目推向右侧 */
+      margin-left: calc(50% + 20px); /* <-- 新增：向右拉近中线，20px是示意值 */
       text-align: left;
     }
     
